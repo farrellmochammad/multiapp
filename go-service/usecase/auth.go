@@ -62,8 +62,6 @@ func DeliveryAuth(r *gin.RouterGroup) {
 
 	r.POST("/userinfo", func(c *gin.Context) {
 		token := c.Request.Header.Get("Authorization")
-		// Check if toke in correct format
-		// ie Bearer: xx03xllasx
 		b := "Bearer: "
 		if !strings.Contains(token, b) {
 			c.JSON(401, gin.H{"message": "Gagal login, token tidak valid"})
@@ -84,7 +82,6 @@ func DeliveryAuth(r *gin.RouterGroup) {
 			return
 		}
 
-		// set User Id Variable
 		c.JSON(200, gin.H{
 			"name":  valid.Claims.(jwt.MapClaims)["Phone"],
 			"phone": valid.Claims.(jwt.MapClaims)["Name"],

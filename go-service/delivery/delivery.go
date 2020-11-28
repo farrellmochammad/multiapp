@@ -1,7 +1,8 @@
 package delivery
 
 import (
-	auth "go-service/usecase"
+	"go-service/middlewares"
+	usecase "go-service/usecase"
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
@@ -23,7 +24,11 @@ func SetupRouter() *gin.Engine {
 
 	v1.Use(cors.Default())
 	{
-		auth.DeliveryAuth(v1)
+		usecase.DeliveryAuth(v1)
+	}
+	v1.Use(middlewares.AuthHandler())
+	{
+		usecase.DeliveryArea(v1)
 	}
 
 	return r

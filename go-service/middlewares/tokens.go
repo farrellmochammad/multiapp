@@ -10,11 +10,11 @@ import (
 func GenerateToken(k []byte, user models.User) (string, error) {
 	token := jwt.New(jwt.SigningMethodHS256)
 	claims := make(jwt.MapClaims)
-	claims["Phone"] = user.Phone
-	claims["Name"] = user.Name
-	claims["Role"] = user.Role
-	claims["Password"] = user.Password
-	claims["Timestamp"] = time.Now().Unix()
+	claims["phone"] = user.Phone
+	claims["name"] = user.Name
+	claims["role"] = user.Role
+	claims["password"] = user.Password
+	claims["timestamp"] = time.Now().Unix()
 	claims["exp"] = time.Now().Add(time.Hour * 72).Unix()
 	token.Claims = claims
 	tokenString, err := token.SignedString(k)

@@ -1,7 +1,6 @@
 package middlewares
 
 import (
-	"fmt"
 	"strings"
 
 	"github.com/dgrijalva/jwt-go"
@@ -33,9 +32,10 @@ func AuthHandler() gin.HandlerFunc {
 			return
 		}
 
-		// set User Id Variable
-		c.Set("user_id", valid.Claims.(jwt.MapClaims)["user_id"])
-		fmt.Println(valid.Claims.(jwt.MapClaims)["user_id"], valid.Claims.(jwt.MapClaims)["exp"])
+		c.Set("phone", valid.Claims.(jwt.MapClaims)["phone"])
+		c.Set("name", valid.Claims.(jwt.MapClaims)["name"])
+		c.Set("role", valid.Claims.(jwt.MapClaims)["role"])
+
 		c.Next()
 	}
 }
