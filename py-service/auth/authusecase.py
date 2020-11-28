@@ -42,7 +42,7 @@ class auth_usecase:
                 user = jwt.decode(token,"efishery123", algorithms=['HS256'], verify= True)
                 return True,user
             except :
-                return False,"Token tidak valid, silahkan login kemblai"
+                return False,"Token tidak valid, silahkan login kembali"
 
         
         

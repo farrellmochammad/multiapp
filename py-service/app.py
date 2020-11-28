@@ -1,5 +1,7 @@
 from flask import Flask, request, jsonify, Blueprint
 from auth import authusecase
+from area import areausecase
+from functools import wraps
 import middleware
 
 app = Flask(__name__)
@@ -64,11 +66,29 @@ def userinfo():
             message = message
         )
 
+
 @v1.route("/area", methods=['POST'])
 def area():
-    print("Hello")
+    areaUsecase = areausecase.area_usecase()
+    return jsonify(
+        areaUsecase.getArea()
+    )
 
-        
+@v1.route("/statistics", methods=['POST'])
+def statistics():
+    area_provinsi = request.args.get('area_provinsi')
+    week = request.args.get('week')
+
+    info = {
+        "area_provinsi" : area_provinsi,
+        "week" : week
+    }
+
+    areaUsecase = areausecase.area_usecase()
+    return jsonify(
+        areaUsecase.getStatistics(info)
+    )
+
     
     
 
