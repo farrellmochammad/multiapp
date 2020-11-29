@@ -39,6 +39,7 @@ class auth_usecase:
                 return False, "Header authorization salah"
             token = arrHeader[1]
             try:
+                print("Token #", token)
                 user = jwt.decode(token,"efishery123", algorithms=['HS256'], verify= True)
                 return True,user
             except :

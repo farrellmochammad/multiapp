@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, Blueprint
+from flask import Flask, request, jsonify, Blueprint, g
 from auth import authusecase
 from area import areausecase
 from functools import wraps
@@ -44,7 +44,7 @@ def login():
         )
     else :
         return jsonify (
-            status = "false",
+            status = "failed",
             message = "Username atau password tidak valid"
         )
 
@@ -68,6 +68,7 @@ def userinfo():
 
 
 @v1.route("/area", methods=['POST'])
+@middleware.validate_jwt
 def area():
     areaUsecase = areausecase.area_usecase()
     return jsonify(
@@ -75,19 +76,27 @@ def area():
     )
 
 @v1.route("/statistics", methods=['POST'])
+@middleware.validate_jwt
 def statistics():
-    area_provinsi = request.args.get('area_provinsi')
-    week = request.args.get('week')
+    user = g.user
+    if str(user["role"]).lower() == "admin":
+        area_provinsi = request.args.get('area_provinsi')
+        week = request.args.get('week')
 
-    info = {
-        "area_provinsi" : area_provinsi,
-        "week" : week
-    }
+        info = {
+            "area_provinsi" : area_provinsi,
+            "week" : week
+        }
 
-    areaUsecase = areausecase.area_usecase()
-    return jsonify(
-        areaUsecase.getStatistics(info)
-    )
+        areaUsecase = areausecase.area_usecase()
+        return jsonify(
+            areaUsecase.getStatistics(info)
+        )
+    else :
+        return jsonify (
+            status = "failed",
+            message = "tidak mempunyai akses"
+        )
 
     
     
