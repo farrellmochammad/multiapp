@@ -7,11 +7,15 @@ import (
 	"strings"
 	"time"
 
+	"github.com/gin-contrib/cache"
+	"github.com/gin-contrib/cache/persistence"
 	"github.com/gin-gonic/gin"
 )
 
 func DeliveryArea(r *gin.RouterGroup) {
-	r.GET("/area", func(c *gin.Context) {
+	store := persistence.NewInMemoryStore(time.Second)
+
+	r.GET("/area", cache.CachePage(store, time.Minute, func(c *gin.Context) {
 		areaList, err := repository.ReadArea()
 		if err != nil {
 			panic(err)
@@ -32,9 +36,9 @@ func DeliveryArea(r *gin.RouterGroup) {
 		c.JSON(200, gin.H{
 			"data": areaList,
 		})
-	})
+	}))
 
-	r.GET("/statistics", func(c *gin.Context) {
+	r.GET("/statistics", cache.CachePage(store, time.Minute, func(c *gin.Context) {
 		role := c.GetString("role")
 		if strings.ToLower(role) == "admin" {
 			var fetch models.Fetch
@@ -86,7 +90,7 @@ func DeliveryArea(r *gin.RouterGroup) {
 			})
 		}
 
-	})
+	}))
 }
 
 func countValue(arr []float64) (float64, float64, float64, float64) {

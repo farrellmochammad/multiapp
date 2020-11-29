@@ -8,8 +8,8 @@ import statistics as st
 class area_usecase:
     def getArea(self):
         areaRepo = arearepo.area_repository()
-        areaList = areaRepo.getAreaCache()
-        exRate = areaRepo.getExRateCache()
+        areaList = areaRepo.getArea()
+        exRate = areaRepo.getExRate()
 
         if areaList == None or exRate == None:
             return False
@@ -28,7 +28,7 @@ class area_usecase:
     
     def getStatistics(self,info):
         areaRepo = arearepo.area_repository()
-        areaList = areaRepo.getAreaCache()      
+        areaList = areaRepo.getArea()      
 
         if areaList == None :
             return False

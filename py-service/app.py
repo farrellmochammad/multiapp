@@ -2,12 +2,13 @@ from flask import Flask, request, jsonify, Blueprint, g
 from auth import authusecase
 from area import areausecase
 from functools import wraps
+from flask_caching import Cache
 import middleware
 
 app = Flask(__name__)
 v1 = Blueprint("api_V1", __name__)
-
-
+cache = Cache(config={'CACHE_TYPE': 'simple', "CACHE_DEFAULT_TIMEOUT": 60})
+cache.init_app(app)
 
 @v1.route("/register", methods=['POST'])
 def register():
@@ -68,6 +69,7 @@ def userinfo():
 
 
 @v1.route("/area", methods=['GET'])
+@cache.cached(timeout=60)
 @middleware.validate_jwt
 def area():
     areaUsecase = areausecase.area_usecase()
@@ -76,6 +78,7 @@ def area():
     )
 
 @v1.route("/statistics", methods=['GET'])
+@cache.cached(timeout=60)
 @middleware.validate_jwt
 def statistics():
     user = g.user
