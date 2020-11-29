@@ -5,3 +5,4 @@ mysql_connector_repackaged==0.3.1
 mysql-connector-python==8.0.22
 passlib==1.7.4
 PyJWT==1.7.1
+bcrypt==3.2.0

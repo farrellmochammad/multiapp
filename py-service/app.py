@@ -67,7 +67,7 @@ def userinfo():
         )
 
 
-@v1.route("/area", methods=['POST'])
+@v1.route("/area", methods=['GET'])
 @middleware.validate_jwt
 def area():
     areaUsecase = areausecase.area_usecase()
@@ -75,7 +75,7 @@ def area():
         areaUsecase.getArea()
     )
 
-@v1.route("/statistics", methods=['POST'])
+@v1.route("/statistics", methods=['GET'])
 @middleware.validate_jwt
 def statistics():
     user = g.user

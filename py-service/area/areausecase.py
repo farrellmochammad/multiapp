@@ -7,9 +7,9 @@ import statistics as st
 
 class area_usecase:
     def getArea(self):
-        areaUsecase = arearepo.area_repository()
-        areaList = areaUsecase.getArea()
-        exRate = areaUsecase.getExRate()
+        areaRepo = arearepo.area_repository()
+        areaList = areaRepo.getAreaCache()
+        exRate = areaRepo.getExRateCache()
 
         if areaList == None or exRate == None:
             return False
@@ -24,16 +24,11 @@ class area_usecase:
 
 
         return areaList
+       
     
     def getStatistics(self,info):
-        areaUsecase = arearepo.area_repository()
-        areaList = areaUsecase.getArea()      
-
-        thetime = "2020-05-18"
-
-        ts = time.strptime(thetime, '%Y-%m-%d')
-
-        print(strftime("%U",ts))
+        areaRepo = arearepo.area_repository()
+        areaList = areaRepo.getAreaCache()      
 
         if areaList == None :
             return False
@@ -50,8 +45,6 @@ class area_usecase:
                 except:
                     print("Some error on data")
         
-        print(statistic)
-
         statistic_result = {
             "min" : min(statistic),
             "max" : max(statistic), 
