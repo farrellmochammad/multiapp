@@ -17,7 +17,7 @@ $ go run main.go
 * Type command "go build"
 
 ```
-$ go run main.go
+$ go build
 ```
 
 * This command will generate file of "go-service"
