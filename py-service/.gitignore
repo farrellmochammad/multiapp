@@ -1,0 +1,5 @@
+__pycache__/
+area/__pycache__/
+auth/__pycache__/
+db/__pycache__/
+usecase/__pycache__/
