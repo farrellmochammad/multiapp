@@ -2,13 +2,11 @@ from flask import Flask, request, jsonify, Blueprint, g, Response
 from auth import authusecase
 from area import areausecase
 from functools import wraps
-from flask_caching import Cache
 import middleware
 
 app = Flask(__name__)
 v1 = Blueprint("api_V1", __name__)
-cache = Cache(config={'CACHE_TYPE': 'simple', "CACHE_DEFAULT_TIMEOUT": 60})
-cache.init_app(app)
+
 
 @v1.route("/register", methods=['POST'])
 def register():
@@ -24,7 +22,7 @@ def register():
     password = authUsecase.insertUser(user)
 
     if password == False : 
-        return jsonify(status="failed",message="user dengan nomor hp tersebut sudah ada"),401
+        return jsonify(status="failed",message="handphone number already exist"),401
     else :
         return jsonify(status="success",password=password),201
 
@@ -70,7 +68,6 @@ def userinfo():
 
 
 @v1.route("/area", methods=['GET'])
-@cache.cached(timeout=60)
 @middleware.validate_jwt
 def area():
     areaUsecase = areausecase.area_usecase()
@@ -86,7 +83,6 @@ def area():
         )
 
 @v1.route("/statistics", methods=['GET'])
-@cache.cached(timeout=60)
 @middleware.validate_jwt
 def statistics():
     user = g.user
@@ -100,14 +96,21 @@ def statistics():
         }
 
         areaUsecase = areausecase.area_usecase()
-        return jsonify(
-            areaUsecase.getStatistics(info)
-        ),200
+        statistics = areaUsecase.getStatistics(info)
+        if statistics == False :
+            return jsonify (
+                status = "failed",
+                message = "No area data"
+            ),404
+        else:
+            return jsonify(
+                areaUsecase.getStatistics(info)
+            ),200
     else :
         return jsonify (
             status =  "failed",
-			message = "No statistic data with name area_provinsi and week"
-        ),404
+			message = "No permission"
+        ),403
 
     
     

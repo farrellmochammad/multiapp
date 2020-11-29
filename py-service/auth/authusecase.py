@@ -38,7 +38,7 @@ class auth_usecase:
             headerString = self.convertToString(header) 
             arrHeader = self.convertToList(headerString)
             if (len(arrHeader) > 2) :
-                return False, "Authroization not valid"
+                return False, "Authorization not valid"
             token = arrHeader[1]
             try:
                 user = jwt.decode(token,"efishery123", algorithms=['HS256'], verify= True)

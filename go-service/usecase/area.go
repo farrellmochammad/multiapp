@@ -47,8 +47,9 @@ func DeliveryArea(r *gin.RouterGroup) {
 			if fetch.AreaProvinsi == "" || fetch.Week == "" {
 				c.JSON(403, gin.H{
 					"status":  "failed",
-					"message": "Query string kosong",
+					"message": "empty Querystring ",
 				})
+				return
 			}
 
 			t, _ := time.Parse(time.RFC3339, strings.Replace(fetch.Week, " ", "+", 1))

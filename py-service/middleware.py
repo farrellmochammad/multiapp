@@ -9,7 +9,7 @@ def validate_jwt(f):
         if ("Bearer: " not in header) :
             return jsonify (
                 status = "failed",
-                message = "Format salah"
+                message = "login failed, token not valid"
             )
         else :
             headerString = convertToString(header) 
@@ -17,7 +17,7 @@ def validate_jwt(f):
             if (len(arrHeader) > 2) :
                 return jsonify (
                     status = "failed",
-                    message = "Header authorization salah"
+                    message = "Authorization not valid"
                 )
             token = arrHeader[1]
             try:
@@ -27,7 +27,7 @@ def validate_jwt(f):
             except :
                 return jsonify (
                     status = "failed",
-                    message = "Token tidak valid, silahkan login kembali"
+                    message = "Token expired, please login back"
                 )
       
     return validate_function

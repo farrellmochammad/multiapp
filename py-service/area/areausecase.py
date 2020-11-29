@@ -30,7 +30,7 @@ class area_usecase:
         areaRepo = arearepo.area_repository()
         areaList = areaRepo.getArea()      
 
-        if areaList == None :
+        if areaList == None or len(areaList) == 0:
             return False
 
         statistic = []
@@ -45,6 +45,9 @@ class area_usecase:
                 except:
                     print("Some error on data")
         
+        if (len(statistic)==0):
+            return False
+
         statistic_result = {
             "min" : min(statistic),
             "max" : max(statistic), 

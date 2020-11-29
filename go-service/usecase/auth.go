@@ -52,7 +52,7 @@ func DeliveryAuth(r *gin.RouterGroup) {
 		} else {
 			c.JSON(401, gin.H{
 				"status":  "failed",
-				"message": "user dengan nomor hp tersebut sudah ada",
+				"message": "handphone number already exist",
 			})
 		}
 
@@ -81,9 +81,9 @@ func DeliveryAuth(r *gin.RouterGroup) {
 		}
 
 		c.JSON(200, gin.H{
-			"name":  valid.Claims.(jwt.MapClaims)["Phone"],
-			"phone": valid.Claims.(jwt.MapClaims)["Name"],
-			"role":  valid.Claims.(jwt.MapClaims)["Role"],
+			"name":  valid.Claims.(jwt.MapClaims)["name"],
+			"phone": valid.Claims.(jwt.MapClaims)["phone"],
+			"role":  valid.Claims.(jwt.MapClaims)["role"],
 		})
 
 	})

@@ -14,20 +14,20 @@ func AuthHandler() gin.HandlerFunc {
 		// ie Bearer: xx03xllasx
 		b := "Bearer: "
 		if !strings.Contains(token, b) {
-			c.JSON(401, gin.H{"message": "Gagal login, token tidak valid"})
+			c.JSON(401, gin.H{"status": "failed", "message": "login failed, token not valid"})
 			c.Abort()
 			return
 		}
 		t := strings.Split(token, b)
 		if len(t) < 2 {
-			c.JSON(401, gin.H{"message": "Authorisasi tidak valid"})
+			c.JSON(401, gin.H{"status": "failed", "message": "Authroization not valid"})
 			c.Abort()
 			return
 		}
 		// Validate token
 		valid, err := ValidateToken(t[1], SigningKey)
 		if err != nil {
-			c.JSON(401, gin.H{"message": "Token expired, silahkan login kembali"})
+			c.JSON(401, gin.H{"status": "failed", "message": "Token expired, please login back"})
 			c.Abort()
 			return
 		}
