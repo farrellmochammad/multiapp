@@ -1,7 +1,6 @@
 package usecase
 
 import (
-	"fmt"
 	"math/rand"
 	"strings"
 	"time"
@@ -21,7 +20,7 @@ func DeliveryAuth(r *gin.RouterGroup) {
 		err := c.Bind(&userReqister)
 
 		if err != nil {
-			c.JSON(500, gin.H{
+			c.JSON(401, gin.H{
 				"status": "failed",
 				"Error":  "There is error on query string",
 			})
@@ -40,44 +39,43 @@ func DeliveryAuth(r *gin.RouterGroup) {
 		}
 		password := b.String()
 
-		fmt.Println(password)
-
 		user := userReqister
 		user.Password = password
 
 		stat := repository.InsertUser(user)
 
 		if stat {
-			c.JSON(200, gin.H{
+			c.JSON(201, gin.H{
 				"status":   "success",
 				"password": password,
 			})
 		} else {
-			c.JSON(403, gin.H{
-				"status": "failed",
+			c.JSON(401, gin.H{
+				"status":  "failed",
+				"message": "user dengan nomor hp tersebut sudah ada",
 			})
 		}
 
 	})
 
-	r.POST("/userinfo", func(c *gin.Context) {
+	r.GET("/userinfo", func(c *gin.Context) {
 		token := c.Request.Header.Get("Authorization")
 		b := "Bearer: "
 		if !strings.Contains(token, b) {
-			c.JSON(401, gin.H{"message": "Gagal login, token tidak valid"})
+			c.JSON(401, gin.H{"status": "failed", "message": "login failed, token not valid"})
 			c.Abort()
 			return
 		}
 		t := strings.Split(token, b)
 		if len(t) < 2 {
-			c.JSON(401, gin.H{"message": "Authorisasi tidak valid"})
+			c.JSON(401, gin.H{"status": "failed", "message": "Authroization not valid"})
 			c.Abort()
 			return
 		}
 		// Validate token
 		valid, err := middlewares.ValidateToken(t[1], middlewares.SigningKey)
 		if err != nil {
-			c.JSON(401, gin.H{"message": "Token expired, silahkan login kembali"})
+			c.JSON(401, gin.H{"status": "failed", "message": "Token expired, please login back"})
 			c.Abort()
 			return
 		}
@@ -94,18 +92,10 @@ func DeliveryAuth(r *gin.RouterGroup) {
 		var userLogin models.User
 		c.Bind(&userLogin)
 
-		// if &userLogin.Phone != nil {
-		// 	c.JSON(500, gin.H{
-		// 		"status": "failed",
-		// 		"Error":  "There is error on query string",
-		// 	})
-		// 	return
-		// }
-
 		user := repository.CheckUserLogin(userLogin).(models.User)
 		switch user.Name {
 		case "-1":
-			c.JSON(403, gin.H{
+			c.JSON(401, gin.H{
 				"status": "Not success",
 				"token":  "Username or password not valid",
 			})

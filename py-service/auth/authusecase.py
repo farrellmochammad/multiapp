@@ -11,8 +11,10 @@ class auth_usecase:
         password = self.getRandomChar(4)
         hashed = bcrypt.hash(password)
         user["password"] = hashed
-        authRepo.insertUser(user)
-        return password
+        if authRepo.insertUser(user) == False :
+            return False
+        else:
+            return password
 
     def getUserByPhone(self,user):
         authRepo = authrepo.auth_repository()
@@ -31,19 +33,18 @@ class auth_usecase:
 
     def getUserInfoJwt(self,header):
         if ("Bearer: " not in header) :
-            return False, "Format salah"
+            return False, "login failed, token not valid"
         else :
             headerString = self.convertToString(header) 
             arrHeader = self.convertToList(headerString)
             if (len(arrHeader) > 2) :
-                return False, "Header authorization salah"
+                return False, "Authroization not valid"
             token = arrHeader[1]
             try:
-                print("Token #", token)
                 user = jwt.decode(token,"efishery123", algorithms=['HS256'], verify= True)
                 return True,user
             except :
-                return False,"Token tidak valid, silahkan login kembali"
+                return False,"Token expired, please login back"
 
         
         

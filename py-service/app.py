@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, Blueprint, g
+from flask import Flask, request, jsonify, Blueprint, g, Response
 from auth import authusecase
 from area import areausecase
 from functools import wraps
@@ -23,10 +23,11 @@ def register():
     authUsecase = authusecase.auth_usecase()
     password = authUsecase.insertUser(user)
 
-    return jsonify (
-        status = "success",
-        password = password
-    )
+    if password == False : 
+        return jsonify(status="failed",message="user dengan nomor hp tersebut sudah ada"),401
+    else :
+        return jsonify(status="success",password=password),201
+
 
 @v1.route("/login", methods=['POST'])
 def login():
@@ -42,14 +43,14 @@ def login():
         return jsonify (
             status = "success",
             token = token
-        )
+        ),200
     else :
         return jsonify (
             status = "failed",
-            message = "Username atau password tidak valid"
-        )
+            message = "Username atau password not valid"
+        ),401
 
-@v1.route("/userinfo", methods=['POST'])
+@v1.route("/userinfo", methods=['GET'])
 def userinfo():
     header = request.headers.get('Authorization')
     authUsecase = authusecase.auth_usecase()
@@ -60,12 +61,12 @@ def userinfo():
             name = message["name"],
             role = message["role"],
             timestamp = message["timestamp"],
-        )
+        ),200
     else :
         return jsonify (
             stats = "failed",
             message = message
-        )
+        ),401
 
 
 @v1.route("/area", methods=['GET'])
@@ -73,9 +74,16 @@ def userinfo():
 @middleware.validate_jwt
 def area():
     areaUsecase = areausecase.area_usecase()
-    return jsonify(
-        areaUsecase.getArea()
-    )
+    areaList = areaUsecase.getArea()
+    if areaList == False :
+        return jsonify (
+            status =  "failed",
+			message = "No area data"
+        ),404
+    else :
+        return jsonify(
+            areaUsecase.getArea()
+        )
 
 @v1.route("/statistics", methods=['GET'])
 @cache.cached(timeout=60)
@@ -94,12 +102,12 @@ def statistics():
         areaUsecase = areausecase.area_usecase()
         return jsonify(
             areaUsecase.getStatistics(info)
-        )
+        ),200
     else :
         return jsonify (
-            status = "failed",
-            message = "tidak mempunyai akses"
-        )
+            status =  "failed",
+			message = "No statistic data with name area_provinsi and week"
+        ),404
 
     
     

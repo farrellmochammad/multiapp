@@ -18,7 +18,10 @@ func DeliveryArea(r *gin.RouterGroup) {
 	r.GET("/area", cache.CachePage(store, time.Minute, func(c *gin.Context) {
 		areaList, err := repository.ReadArea()
 		if err != nil {
-			panic(err)
+			c.JSON(404, gin.H{
+				"status":  "failed",
+				"message": "No area data",
+			})
 		}
 
 		converter, err := repository.ReadConverter()
@@ -33,9 +36,7 @@ func DeliveryArea(r *gin.RouterGroup) {
 			}
 		}
 
-		c.JSON(200, gin.H{
-			"data": areaList,
-		})
+		c.JSON(200, areaList)
 	}))
 
 	r.GET("/statistics", cache.CachePage(store, time.Minute, func(c *gin.Context) {
@@ -69,9 +70,9 @@ func DeliveryArea(r *gin.RouterGroup) {
 			}
 
 			if len(numbers) == 0 {
-				c.JSON(200, gin.H{
+				c.JSON(404, gin.H{
 					"status":  "success",
-					"message": "No data with query string area and week time ",
+					"message": "No statistic data with name area_provinsi and week",
 				})
 			} else {
 				min, max, avg, med := countValue(numbers)

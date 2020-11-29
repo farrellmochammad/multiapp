@@ -227,7 +227,19 @@ font-style: italic;
 
     <!--Todo: process Response Object and its headers, schema, examples -->
 
-    <h3 class="field-label">Example result data</h3>
+
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <br><br>
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    <h5 class="field-label">Return area data</h5>
     <div class="example-data-content-type">Content-Type: application/json</div>
     <pre class="example"><code>[
     {
@@ -238,25 +250,19 @@ font-style: italic;
         "size": "80",
         "tgl_parsed": "2020-05-18T05:01:39+08:00",
         "timestamp": "1589749299914",
-        "usd_price": "0",
+        "usd_price": "1.42100662",
         "uuid": "f251d774-42d7-4ac7-a5f5-a5a23c44648d"
     }
   ]</code></pre>
 
-    <h3 class="field-label">Produces</h3>
-    This API call produces the following media types according to the <span class="header">Accept</span> request header;
-    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
-    <ul>
-      <li><code>application/json</code></li>
-    </ul>
 
-    <h3 class="field-label">Responses</h3>
-    <h4 class="field-label">200</h4>
-    login success
-        <a href="#inline_response_200_1">inline_response_200_1</a>
-    <h4 class="field-label">400</h4>
-    bad input parameter
-        <a href="#"></a>
+    <h4 class="field-label">404</h4>
+    <h5 class="field-label">No area data </h5>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+    "status":  "failed",
+    "message": "No area data",
+}</code></pre>
   </div> <!-- method -->
   <hr/>
   <div class="method"><a name="getStatistics"/>
@@ -298,7 +304,12 @@ font-style: italic;
 
     <!--Todo: process Response Object and its headers, schema, examples -->
 
-    <h3 class="field-label">Example result data</h3>
+
+   
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    <h5 class="field-label">token valid and back average,min,median and max value</h5>
     <div class="example-data-content-type">Content-Type: application/json</div>
     <pre class="example"><code>{
   "average" : 20000.0,
@@ -307,14 +318,13 @@ font-style: italic;
   "max" : 20000.0
 }</code></pre>
 
-   
-
-    <h3 class="field-label">Responses</h3>
-    <h4 class="field-label">200</h4>
-    token valid and back average,min,median and max value
-    <h4 class="field-label">400</h4>
-    bad input parameter
-        <a href="#"></a>
+    <h4 class="field-label">404</h4>
+    <h5 class="field-label">No statistics data/h5>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "status":  "failed",
+  "message": "No area data"
+}</code></pre>
   </div> <!-- method -->
   <hr/>
   <h1><a name="Auth">Auth</a></h1>
@@ -340,26 +350,30 @@ font-style: italic;
       "phone" : "+6281224727009",
       "password" : "PLJB"
 }</code></pre>
-
-
-
-    <!--Todo: process Response Object and its headers, schema, examples -->
-
-    <h3 class="field-label">Example Success Login data</h3>
+   
+    <br><br>
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    <h5 class="field-label">Login success</h5>
     <div class="example-data-content-type">Content-Type: application/json</div>
     <pre class="example"><code>{
   "status" : "success",
   "token" : "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwaG9uZSI6Iis2MjgxMjcxMDkxNTY3IiwibmFtZSI6IkF6aXMgaXNrYW5kYXIiLCJyb2xlIjoibm9uIiwicGFzc3dvcmQiOiIkMmIkMTIkVGY4OFBmTVF4Q3JPUjlYQi9pbXZQLjBmYkxyc2tHc3FuSUxOZlVRU2RVT2hJaE5STjl2b3EiLCJ0aW1lc3RhbXAiOjE2MDY2MTAzODcuOTY0MDU0fQ.n4Zt27JXRKKQyF3RJIcTfyWpVD_D7POa07ytHlqlQ1k"
 }</code></pre>
-
-   
-
-    <h3 class="field-label">Responses</h3>
-    <h4 class="field-label">200</h4>
-    login success
-    <h4 class="field-label">400</h4>
-    bad input parameter
-        <a href="#"></a>
+    <h4 class="field-label">401</h4>
+    <h5 class="field-label">Username or password not valid</h5>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  	"status": "Not success",
+		"token":  "Username or password not valid",
+}</code></pre>
+<h4 class="field-label">500</h4>
+    <h5 class="field-label">Username and password not match</h5>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  	"status": "Not success",
+		"token":  "Username or password not match",
+}</code></pre>
   </div> <!-- method -->
   <hr/>
   <div class="method"><a name="registerAuth"/>
@@ -383,28 +397,26 @@ font-style: italic;
     "name" : "Farrell Mochammad",
     "role" : "admin"
 }</code></pre>
-
-
-
-    <!--Todo: process Response Object and its headers, schema, examples -->
-
-    <h3 class="field-label">Example result data</h3>
+    <br><br>
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">201</h4>
+    <h5 class="field-label">Example result data</h5>
     <div class="example-data-content-type">Content-Type: application/json</div>
     <pre class="example"><code>{
   "password" : "15d3",
   "status" : "success"
 }</code></pre>
 
-   
+    <h4 class="field-label">401</h4>
+    <h5 class="field-label">Example result data</h5>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+	"status":  "failed",
+	"message": "user dengan nomor hp tersebut sudah ada",
+}</code></pre>
 
-    <h3 class="field-label">Responses</h3>
-    <h4 class="field-label">200</h4>
-    register success
-    <h4 class="field-label">400</h4>
-    bad input parameter
-        <a href="#"></a>
-  </div> <!-- method -->
-  <hr/>
+
+
   <div class="method"><a name="userInfoAuth"/>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
@@ -423,19 +435,7 @@ font-style: italic;
       <div class="param-desc"><span class="param-type">Bearer: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwaG9uZSI6Iis2MjgxMjI0NzI3MDA5IiwibmFtZSI6IkZhcnJlbGwgTW9jaGFtbWFkIiwicm9sZSI6ImFkbWluIiwicGFzc3dvcmQiOiIkMmIkMTIkdUpDWXQ1YWNrcGdpRlZzRHdDUlZHZTNPeEJXYURNRkdiS1hZdGp0UUFMYWhTT0ZpQjZjWXUiLCJ0aW1lc3RhbXAiOjE2MDY2MjU1NzcuMzYwNzM3fQ.52vrTYTDSyTsccUffoyCIvwgam40J1mweR3bkwNE0Xw</span> &mdash;  </div>
     </div>  <!-- field-items -->
 
-
-
-
     <!--Todo: process Response Object and its headers, schema, examples -->
-
-    <h3 class="field-label">Example result data</h3>
-    <div class="example-data-content-type">Content-Type: application/json</div>
-    <pre class="example"><code>{
-  "role" : "admin",
-  "phone" : "success",
-  "name" : "Wahyu iskandar",
-  "timestamp" : 1.606608566223562E9
-}</code></pre>
 
     <h3 class="field-label">Produces</h3>
     This API call produces the following media types according to the <span class="header">Accept</span> request header;
@@ -444,12 +444,24 @@ font-style: italic;
       <li><code>application/json</code></li>
     </ul>
 
+    <br><br>
     <h3 class="field-label">Responses</h3>
     <h4 class="field-label">200</h4>
-    token valid
-    <h4 class="field-label">400</h4>
-    token not valid
-        <a href="#"></a>
+    <h5 class="field-label">JWT Valid</h5>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "role" : "admin",
+  "phone" : "success",
+  "name" : "Wahyu iskandar",
+  "timestamp" : 1.606608566223562E9
+}</code></pre>
+    <h4 class="field-label">401</h4>
+    <h5 class="field-label">Token Not valid</h5>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "status": "failed",
+  "message": "Gagal login, token tidak valid"
+}</code></pre>
   </div> <!-- method -->
   <hr/>
   </body>

@@ -19,13 +19,15 @@ class auth_repository:
         
     
     def insertUser(self,user):
-        sql = "INSERT INTO Users (phone,name,role,password) VALUES (%s,%s,%s,%s)"
-        val = (user["phone"],user["name"],user["role"],user["password"])
-        conn = db.getDb()
-        cursor = conn.cursor()
-        cursor.execute(sql,val)
+        try:
+            sql = "INSERT INTO Users (phone,name,role,password) VALUES (%s,%s,%s,%s)"
+            val = (user["phone"],user["name"],user["role"],user["password"])
+            conn = db.getDb()
+            cursor = conn.cursor()
+            cursor.execute(sql,val)
 
-        conn.commit()
-        
-        return user
-    
+            conn.commit()
+            
+            return user
+        except: 
+            return False    
