@@ -1,1 +1,5 @@
-*.pyc
+py-service/__pycache__/
+py-service/area/__pycache__/
+py-service/auth/__pycache__/
+py-service/db/__pycache__/
+py-service/usecase/__pycache__/
