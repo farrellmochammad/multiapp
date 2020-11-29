@@ -24,4 +24,4 @@ class area_repository:
             return None  
         Jresponse = uResponse.text
         data = json.loads(Jresponse)
-        return data
+        return data["IDR_USD"]
