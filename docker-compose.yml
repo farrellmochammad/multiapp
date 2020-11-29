@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+  go-service:
+    build: ./go-service
+    volumes:
+      - ./go-service:/app
+    ports:
+      - 8013:8013
+
+  py-service:
+    build: ./py-service
+    volumes:
+      - ./py-service:/usr/src/app
+    ports:
+      - 8015:8015
