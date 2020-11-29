@@ -4,6 +4,7 @@ import random
 import string
 import jwt 
 import datetime
+import os
 
 class auth_usecase:
     def insertUser(self,user):
@@ -26,7 +27,7 @@ class auth_usecase:
                 'role' : userVerify["role"],
                 'password' : userVerify["password"],
                 'timestamp' : datetime.datetime.now().timestamp(),
-            },"efishery123",algorithm='HS256')
+            },os.environ['SIGNING_KEY'],algorithm='HS256')
             return True,encoded_jwt.decode("utf-8")
         else :
             return False,None
@@ -41,7 +42,7 @@ class auth_usecase:
                 return False, "Authorization not valid"
             token = arrHeader[1]
             try:
-                user = jwt.decode(token,"efishery123", algorithms=['HS256'], verify= True)
+                user = jwt.decode(token,os.environ['SIGNING_KEY'], algorithms=['HS256'], verify= True)
                 return True,user
             except :
                 return False,"Token expired, please login back"
