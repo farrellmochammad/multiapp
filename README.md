@@ -17,5 +17,5 @@ To initialize project locally, please move to :
 $ docker-compose up
 ```
 * Ensure that app running, 
-- golang app is on port 8013
-- python app is on port 8015
+golang app is on port 8013
+python app is on port 8015
