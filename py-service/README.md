@@ -14,3 +14,4 @@
 ```
 $ python main.py
 ```
+* Ensure the app is running by hit localhost:8015/

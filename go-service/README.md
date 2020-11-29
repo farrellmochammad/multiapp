@@ -26,6 +26,8 @@ $ go build
 ```
 $ ./go-service
 ```
+* Ensure the app is running by hit localhost:8013/
+
 
 ### Execute code directly (without build)
 * Open terminal, type command "./go-service"
@@ -33,3 +35,4 @@ $ ./go-service
 ```
 $ ./go-service
 ```
+* Ensure the app is running by hit localhost:8013/
