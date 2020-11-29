@@ -1,9 +1,12 @@
 package db
 
-import "database/sql"
+import (
+	"database/sql"
+	"os"
+)
 
 func GetDB() *sql.DB {
-	db, err := sql.Open("mysql", "u1107404_efishery:efishery123!@tcp(5.181.216.74:3306)/u1107404_efishery")
+	db, err := sql.Open("mysql", os.Getenv("DB_CONFIG"))
 
 	if err != nil {
 		panic(err.Error())

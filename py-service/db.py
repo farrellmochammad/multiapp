@@ -1,14 +1,15 @@
 import mysql.connector as mysql
+import os
 
 def getDb():
     # enter your server IP address/domain name
-    HOST = "indikost.com" # or "domain.com"
+    HOST = os.environ['HOST'] # or "domain.com"
     # database name, if you want just to connect to MySQL server, leave it empty
-    DATABASE = "u1107404_efishery"
+    DATABASE = os.environ['DATABASE']
     # this is the user you create
-    USER = "u1107404_efishery"
+    USER = os.environ['USER']
     # user password
-    PASSWORD = "efishery123!"
+    PASSWORD = os.environ['PASSWORD']
     # connect to MySQL server
     db_connection = mysql.connect(host=HOST, database=DATABASE, user=USER, password=PASSWORD)
     print("Connected to:", db_connection.get_server_info())

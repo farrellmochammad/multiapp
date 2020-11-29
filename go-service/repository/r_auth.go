@@ -47,8 +47,6 @@ func CheckUserLogin(user model.User) interface{} {
 	db := database.GetDB()
 	var tag model.User
 
-	fmt.Println(user.Phone)
-	fmt.Println(user.Password)
 	err := db.QueryRow("SELECT Phone,Password,Name,Role FROM Users where Phone = ?", user.Phone).Scan(&tag.Phone, &tag.Password, &tag.Name, &tag.Role)
 
 	if err != nil {
