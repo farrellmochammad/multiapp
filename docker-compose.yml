@@ -7,6 +7,8 @@ services:
       - ./go-service:/app
     ports:
       - 8013:8013
+    environment: 
+      - DB_CONFIG=u1107404_efishery:efishery123!@tcp(5.181.216.74:3306)/u1107404_efishery
 
   py-service:
     build: ./py-service
