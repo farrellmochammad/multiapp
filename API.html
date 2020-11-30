@@ -208,7 +208,7 @@ font-style: italic;
   <div class="method"><a name="getArea"/>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
-    <pre class="post"><code class="huge"><span class="http-method">post</span> /area</code></pre></div>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /area</code></pre></div>
     <div class="method-summary">get area information (<span class="nickname">getArea</span>)</div>
     <div class="method-notes">get area information with jwt token</div>
 
@@ -262,6 +262,14 @@ font-style: italic;
     <pre class="example"><code>{
     "status":  "failed",
     "message": "No area data",
+}</code></pre>
+
+    <h4 class="field-label">401</h4>
+    <h5 class="field-label">Token Not valid</h5>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "status": "failed",
+  "message": "Gagal login, token tidak valid"
 }</code></pre>
   </div> <!-- method -->
   <hr/>
@@ -324,6 +332,14 @@ font-style: italic;
     <pre class="example"><code>{
   "status":  "failed",
   "message": "No area data"
+}</code></pre>
+
+    <h4 class="field-label">401</h4>
+    <h5 class="field-label">Token Not valid</h5>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "status": "failed",
+  "message": "Gagal login, token tidak valid"
 }</code></pre>
   </div> <!-- method -->
   <hr/>
@@ -412,7 +428,7 @@ font-style: italic;
     <div class="example-data-content-type">Content-Type: application/json</div>
     <pre class="example"><code>{
 	"status":  "failed",
-	"message": "user dengan nomor hp tersebut sudah ada",
+	"message": "handphone number already exist",
 }</code></pre>
 
 
